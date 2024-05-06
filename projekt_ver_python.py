@@ -1,5 +1,6 @@
 import sys
-from math import sin, cos, sqrt, atan, atan2, degrees, radians
+from math import sin, cos, tan,  sqrt, atan, atan2, degrees, radians
+from numpy import array
 
 
 class Transformacje:
@@ -71,28 +72,24 @@ class Transformacje:
             else:
                 raise NotImplementedError(f"{output} - output format not defined")
         
-        def plh2xyz(p, l, h):
+        def plh2xyz(self, p, l, h):
             '''
             Algorytm odwrotny do tego zaproponowanego przez Hirvonena - transformuje współrzędne geocentryczne
             do współrzędnych ortokartezjańskich w postaci X, Y, Z.
 
             Parameters
             ----------
-            f : float
+            p : float
                 Wspolrzedna fi punktu (radiany)
             l : float
                 Wspolrzedna lambda punktu (radiany)
             h : float
-                Wysokosc punktu (metry)
+                Wysokosc elipsoidalna punktu (metry)
 
             Returns
             -------
-            X : float
-                Wspolrzedna X punktu (metry)
-            Y : float
-                Wspolrzedna Y punktu (metry)
-            Z : float
-                Wspolrzedna Z punktu (metry)
+            X, Y, Z : FLOAT
+                 [metry] współrzędne w układzie orto-kartezjańskim.
 
             '''
             N = self.a / sqrt((1 - self.ecc2 * sin(f)**2))
@@ -100,6 +97,81 @@ class Transformacje:
             Y = (N + h) * cos(f) * sin(l)
             Z = ((N * (1 - self.ecc2)) + h) * sin(f) 
             return X, Y, Z
+        
+        def xyz2neu(self, X, Y, Z):
+            '''
+            Funkcja przekształca współrzędne orto-karrtezjańskie XYZ do współrzędnych topocentrycznych NEU (northing, easting, up).
+            
+            Parameters
+            ----------
+            X, Y, Z : FLOAT
+                 [metry] współrzędne w układzie orto-kartezjańskim.
+
+            Returns
+            -------
+            n, e, u : FLOAT
+                 współrzędne w układzie topocentrycznym, 
+
+            '''
+            f, l, h = xyz2plh(self, X, Y, Z)
+            R = array([[-sin(f)*cos(l), -sin(f)*sin(l), cos(f)],
+                          [-sin(l), cos(l), 0],
+                          [cos(f)*cos(l), cos(f)*sin(l), sin(f)]])
+            dX = [X, Y, Z]
+            dx = R @ dX
+            n, e, u = dx[0], dx[1], dx[2]
+            return n, e, u
+        
+        def bl2two(self, f, l, lb0):
+            if lb0 == 15:
+                strefa = 5
+            elif lb0 == 18:
+                strefa = 6
+            elif lb0 == 21:
+                strefa = 7
+            elif lb0 == 24:
+                strefa = 8
+            b2 = self.a**2 * (1 - self.ecc2)
+            eeprim = (self.a**2 - b2) / b2
+            deltalb = l - lb0
+            t = tan(f)
+            eta2 = eeprim * cos(f)**2
+            N = self.a / sqrt((1 - self.ecc2 * sin(f)**2))
+            A0 = 1 - self.ecc2/4 - (3*(self.ecc2**2))/64 - (5*(self.ecc2**3))/256
+            A2 = (3/8)*(self.ecc2 + self.ecc2**2/4 + (15*(self.ecc2**3))/128)
+            A4 = (15/256)*(self.ecc2**2 + (3*(self.ecc2**3))/4)
+            A6 = (36*(self.ecc2**3))/3072
+            sig = self.a*(A0*f - A2*sin(2*f) + A4*sin(4*f) - A6*sin(6*f))
+            xgk = sig + (deltalb**2 / 2) * N * sin(f) * cos(f) * (1 + (deltalb**2 / 12) * cos(f)**2 * (5 - t**2 + 9*eta2 + 4*eta2**2)
+                                                                        + (deltalb**4 / 360) * cos(f)**4 * (61 - 58*t**2 + t**4 + 270*eta2 - 330 * eta2 * t**2))
+            ygk = deltalb * N * cos(f) * (1 + (deltalb**2 / 6) * cos(f)**2 * (1 - t**2 + eta2)
+                                             + (deltalb**4 / 120) * cos(f)**4 * (5 - 18*t**2 + t**4 + 14*eta2 - 58 * eta2 * t**2))
+            m2000 = 0.999923 
+            x2000 = xgk * m2000
+            y2000 = ygk * m2000 + strefa * 1000000 + 500000
+            return x2000, y2000
+        
+        def bl2nine(self, b, l, lb0 = radians(19)):
+            b2 = self.a**2 * (1 - self.ecc2)
+            eeprim = (self.a**2 - b2) / b2
+            deltalb = l - lb0
+            t = tan(f)
+            eta2 = eeprim * cos(f)**2
+            N = self.a / sqrt((1 - self.ecc2 * sin(f)**2))
+            A0 = 1 - self.ecc2/4 - (3*(self.ecc2**2))/64 - (5*(self.ecc2**3))/256
+            A2 = (3/8)*(self.ecc2 + self.ecc2**2/4 + (15*(self.ecc2**3))/128)
+            A4 = (15/256)*(self.ecc2**2 + (3*(self.ecc2**3))/4)
+            A6 = (36*(self.ecc2**3))/3072
+            sig = self.a*(A0*f - A2*sin(2*f) + A4*sin(4*f) - A6*sin(6*f))
+            xgk = sig + (deltalb**2 / 2) * N * sin(f) * cos(f) * (1 + (deltalb**2 / 12) * cos(f)**2 * (5 - t**2 + 9*eta2 + 4*eta2**2)
+                                                                        + (deltalb**4 / 360) * cos(f)**4 * (61 - 58*t**2 + t**4 + 270*eta2 - 330 * eta2 * t**2))
+            ygk = deltalb * N * cos(f) * (1 + (deltalb**2 / 6) * cos(f)**2 * (1 - t**2 + eta2)
+                                             + (deltalb**4 / 120) * cos(f)**4 * (5 - 18*t**2 + t**4 + 14*eta2 - 58 * eta2 * t**2))
+            m92 = 0.9993
+            x92 = xgk * m92 - 5300000
+            y92 = ygk * m92 + 500000
+            
+            return x92, y92
 
 
 if __name__ == "__main__":
