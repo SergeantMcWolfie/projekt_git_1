@@ -127,8 +127,7 @@ class Transformacje:
                    [cos(lam), -sin(phi)*sin(lam), cos(phi)*sin(lam)],
                    [0, cos(phi), sin(phi)]])
         
-        dx = R.T @ dX
-        e, n, u = dx[0], dx[1], dx[2]
+        e, n, u = R.T @ dX
         return e, n ,u
     
     def bl2two(self, f, l, lb0):
@@ -217,18 +216,18 @@ class Transformacje:
 
 
 if __name__ == "__main__":
-    if 'wgs84' in sys.argv[-4]:
+    if 'wgs84' in sys.argv[-3]:
         geo = Transformacje(model = "wgs84")
-    elif 'grs80' in sys.argv[-4]:
+    elif 'grs80' in sys.argv[-3]:
         geo = Transformacje(model = "grs80")
-    elif 'mars' in sys.argv[-4]:
+    elif 'mars' in sys.argv[-3]:
         geo = Transformacje(model = "mars")
     else:
         raise 'Podaj model elipsoidy!'
-    imp_file_path = sys.argv[-1]
-    header_lines = int(sys.argv[-2])
+    imp_file_path = sys.argv[-2]
+    header_lines = int(sys.argv[-1])
     
-    if "xyz2blh" in sys.argv[-3]:
+    if "xyz2blh" in sys.argv[-4]:
         
     # XYZ TO BLH
         coords_plh = []
@@ -240,6 +239,7 @@ if __name__ == "__main__":
                 x_str, y_str, z_str = line.split(',')
                 x, y, z = (float(x_str), float(y_str), float(z_str))
                 p, l, h = geo.xyz2plh(x, y, z)
+                p, l, h = round(p, 6), round(l, 6), round(h, 3)
                 coords_plh.append([p, l, h])
         with open('result_xyz2blh.txt', 'w') as f:
             # HEADER
@@ -251,7 +251,7 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
                 
-    elif "xyz2neu" in sys.argv[-3]:
+    elif "xyz2neu" in sys.argv[-4]:
         
     # XYZ TO NEU
         coords_neu = []
@@ -267,10 +267,12 @@ if __name__ == "__main__":
                     x_str, y_str, z_str = line.split(',')
                     x_st, y_st, z_st = (float(x_str), float(y_str), float(z_str))
                     e, n, u = geo.xyz2neu(x_st, y_st, z_st, x_end, y_end, z_end)
+                    e, n, u = float(e), float(n), float(u)
+                    e, n, u = round(e, 3), round(n, 3), round(u, 3)
                     coords_neu.append([n, e, u])
         with open('result_xyz2neu.txt', 'w') as f:
             # HEADER
-            f.write('Podane współrzędne kartezjańskie XYZ punktu początkowego\n zamienione na topocentryczne NEU - northing, easting, up.\n')
+            f.write('Podane współrzędne kartezjańskie XYZ nadajnika zamienione na topocentryczne NEU - northing, easting, up.\n')
             f.write(' Northing   Easting   Up \n')
             f.write('#---------------------------\n')
             # CONTENT
@@ -278,7 +280,7 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
             
-    elif "blh2xyz" in sys.argv[-3]:
+    elif "blh2xyz" in sys.argv[-4]:
     # BLH TO XYZ
     
         coords_xyz = []
@@ -302,7 +304,7 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
                 
-    elif "bl2two" in sys.argv[-3]:
+    elif "bl2two" in sys.argv[-4]:
     # BL TO XY2000
         
         coords_two = []
@@ -333,7 +335,7 @@ if __name__ == "__main__":
                     line = ','.join([str(coord) for coord in coords])
                     f.write(line + '\n')
 
-    elif "bl2nine" in sys.argv[-3]:
+    elif "bl2nine" in sys.argv[-4]:
     # BL TO XY1992    
         
         coords_two = []
