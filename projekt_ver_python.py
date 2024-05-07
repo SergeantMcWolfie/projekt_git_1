@@ -159,7 +159,7 @@ class Transformacje:
             strefa = 8
         b2 = self.a**2 * (1 - self.ecc2)
         eeprim = (self.a**2 - b2) / b2
-        deltalb = l - lb0
+        deltalb = l - radians(lb0)
         t = tan(f)
         eta2 = eeprim * cos(f)**2
         N = self.a / sqrt((1 - self.ecc2 * sin(f)**2))
