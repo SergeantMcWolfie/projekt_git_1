@@ -117,24 +117,19 @@ class Transformacje:
              współrzędne w układzie topocentrycznym.
     
         '''
-        r   = sqrt(X_st**2 + Y_st**2)           # promień
-        lat_prev = atan(Z_st / (r * (1 - self.ecc2)))    # pierwsze przybliilizenie
-        lat = 0
-        while abs(lat_prev - lat) > 0.000001/206265:    
-            lat_prev = lat
-            N = self.a / sqrt(1 - self.ecc2 * sin(lat_prev)**2)
-            h = r / cos(lat_prev) - N
-            lat = atan((Z_st/r) * (((1 - self.ecc2 * N/(N + h))**(-1))))
-        lon = atan(Y_st/X_st)
-        N = self.a / sqrt(1 - self.ecc2 * (sin(lat))**2);
-        h = r / cos(lat) - N
-        dX = [X_st - X_end, Y_st - Y_end, Z_st - Z_end]
-        R = array([[-sin(lat)*cos(lon), -sin(lat)*sin(lon), cos(lat)],
-                      [-sin(lon), cos(lon), 0],
-                      [cos(lat)*cos(lon), cos(lat)*sin(lon), sin(lat)]])
-        dx = R @ dX
-        n, e, u = dx[0], dx[1], dx[2]
-        return n, e, u
+        phi, lam, _ = Transformacje.xyz2plh(self, X_st, Y_st, Z_st)
+        
+        dX = [[X_st - X_end],
+              [Y_st - Y_end],
+              [Z_st - Z_end]]
+        
+        R = array([[-sin(lam), -sin(phi)*cos(lam), cos(phi)*cos(lam)],
+                   [cos(lam), -sin(phi)*sin(lam), cos(phi)*sin(lam)],
+                   [0, cos(phi), sin(phi)]])
+        
+        dx = R.T @ dX
+        e, n, u = dx[0], dx[1], dx[2]
+        return e, n ,u
     
     def bl2two(self, f, l, lb0):
         '''
@@ -198,31 +193,26 @@ class Transformacje:
     
         Returns
         -------
-        x92 : TYPE
-            DESCRIPTION.
-        y92 : TYPE
+        x92, y92 : TYPE
             DESCRIPTION.
     
         '''
-        b2 = self.a**2 * (1 - self.ecc2)
-        eeprim = (self.a**2 - b2) / b2
-        deltalb = l - lb0
-        t = tan(f)
-        eta2 = eeprim * cos(f)**2
-        N = self.a / sqrt((1 - self.ecc2 * sin(f)**2))
-        A0 = 1 - self.ecc2/4 - (3*(self.ecc2**2))/64 - (5*(self.ecc2**3))/256
-        A2 = (3/8)*(self.ecc2 + self.ecc2**2/4 + (15*(self.ecc2**3))/128)
-        A4 = (15/256)*(self.ecc2**2 + (3*(self.ecc2**3))/4)
-        A6 = (36*(self.ecc2**3))/3072
-        sig = self.a*(A0*f - A2*sin(2*f) + A4*sin(4*f) - A6*sin(6*f))
-        xgk = sig + (deltalb**2 / 2) * N * sin(f) * cos(f) * (1 + (deltalb**2 / 12) * cos(f)**2 * (5 - t**2 + 9*eta2 + 4*eta2**2)
-                                                                    + (deltalb**4 / 360) * cos(f)**4 * (61 - 58*t**2 + t**4 + 270*eta2 - 330 * eta2 * t**2))
-        ygk = deltalb * N * cos(f) * (1 + (deltalb**2 / 6) * cos(f)**2 * (1 - t**2 + eta2)
-                                         + (deltalb**4 / 120) * cos(f)**4 * (5 - 18*t**2 + t**4 + 14*eta2 - 58 * eta2 * t**2))
-        m92 = 0.9993
-        x92 = xgk * m92 - 5300000
-        y92 = ygk * m92 + 500000
-        
+        b2=self.a**2*(1-self.ecc2)
+        e_2=(self.a**2-b2)/b2
+        dl=l-lb0
+        t=tan(f)
+        n2=e_2*cos(f)**2
+        N = self.a / sqrt(1 - self.ecc2 * sin(f)**2)
+        A0=1-self.ecc2/4-3*self.ecc2**2/64-5*self.ecc2**3/256
+        A2=(3/8)*(self.ecc2+self.ecc2**2/4+15*self.ecc2**3/128)
+        A4=15/256*(self.ecc2**2+3*self.ecc2**3/4)
+        A6=35*self.ecc2**3/3072
+        sigma = self.a*(A0*f-A2*sin(2*f)+A4*sin(4*f)-A6*sin(6*f))
+        x_gk = sigma+(dl**2/2)*N*sin(f)*cos(f)*(1+(dl**2/12)*(cos(f))**2*(5-t**2+9*n2+4*n2**2)+(dl**4/360)*(cos(f))**4*(61-58*t**2+t**4+270*n2-330*n2*t**2))
+        y_gk = dl*N*cos(f)*(1+(dl**2/6)*(cos(f))**2*(1-t**2+n2)+(dl**4/120)*(cos(f))**4*(5-18*t**2+t**4+14*n2-58*n2*t**2))
+        m1992=0.9993
+        x92=x_gk*m1992-5300000
+        y92=y_gk*m1992+500000
         return x92, y92
 
 
@@ -265,14 +255,18 @@ if __name__ == "__main__":
         
     # XYZ TO NEU
         coords_neu = []
+        wsp_odbiornik_str = input('Podaj współrzędne odbiornika: ')
+        wsp_odbiornik = wsp_odbiornik_str.split(',')
+        x_end_str, y_end_str, z_end_str = wsp_odbiornik[0], wsp_odbiornik[1], wsp_odbiornik[2]
+        x_end, y_end, z_end = float(x_end_str), float(y_end_str), float(z_end_str)
         with open(imp_file_path) as f:
                 lines = f.readlines()
                 lines = lines[header_lines:]
                 for line in lines:
                     line = line.strip()
-                    x_str, y_str, z_str, x2_str, y2_str, z2_str = line.split(',')
-                    x_st, y_st, z_st, x_end, y_end, z_end = (float(x_str), float(y_str), float(z_str), float(x2_str), float(y2_str), float(z2_str))
-                    n, e, u = geo.xyz2neu(x_st, y_st, z_st, x_end, y_end, z_end)
+                    x_str, y_str, z_str = line.split(',')
+                    x_st, y_st, z_st = (float(x_str), float(y_str), float(z_str))
+                    e, n, u = geo.xyz2neu(x_st, y_st, z_st, x_end, y_end, z_end)
                     coords_neu.append([n, e, u])
         with open('result_xyz2neu.txt', 'w') as f:
             # HEADER
@@ -312,25 +306,32 @@ if __name__ == "__main__":
     # BL TO XY2000
         
         coords_two = []
-        with open(imp_file_path) as f:
-                lines = f.readlines()
-                lines = lines[header_lines:]
-                for line in lines:
-                    line = line.strip()
-                    b_str, l_str = line.split(',')
-                    b, l = (float(b_str), float(l_str))
-                    x, y = geo.bl2two(b, l, lb0 = 15)
-                    x, y = round(x, 3), round(y, 3)
-                    coords_two.append([x, y])
-        with open('result_bl2two.txt', 'w') as f:
-            # HEADER
-            f.write('Podane współrzędne kartezjańskie XYZ punktu początkowego\n zamienione na topocentryczne NEU - northing, easting, up.\n')
-            f.write(' Northing   Easting   Up \n')
-            f.write('#---------------------------\n')
-            # CONTENT
-            for coords in coords_two:
-                line = ','.join([str(coord) for coord in coords])
-                f.write(line + '\n')
+        
+        lb0 = int(input('Podaj jeden z południków osiowych 15/18/21/24: '))
+        if lb0 != 15 and lb0 != 18 and lb0 != 21 and lb0 != 24:
+            raise ValueError('Musisz podać jeden z wymienionych południków!')
+        else:
+                
+            with open(imp_file_path) as f:
+                    lines = f.readlines()
+                    lines = lines[header_lines:]
+                    for line in lines:
+                        line = line.strip()
+                        b_str, l_str = line.split(',')
+                        b, l = (float(b_str), float(l_str))
+                        b, l = radians(b), radians(l)
+                        x, y = geo.bl2two(b, l, lb0)
+                        x, y = round(x, 3), round(y, 3)
+                        coords_two.append([x, y])
+            with open('result_bl2two.txt', 'w') as f:
+                # HEADER
+                f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL2000 w postaci X i Y.\n')
+                f.write(' X   Y\n')
+                f.write('#---------------------------\n')
+                # CONTENT
+                for coords in coords_two:
+                    line = ','.join([str(coord) for coord in coords])
+                    f.write(line + '\n')
 
     elif "bl2nine" in sys.argv[-3]:
     # BL TO XY1992    
@@ -343,13 +344,14 @@ if __name__ == "__main__":
                     line = line.strip()
                     b_str, l_str = line.split(',')
                     b, l = (float(b_str), float(l_str))
+                    b, l = radians(b), radians(l)
                     x, y = geo.bl2nine(b, l)
                     x, y = round(x, 3), round(y, 3)
                     coords_two.append([x, y])
         with open('result_bl2nine.txt', 'w') as f:
             # HEADER
-            f.write('Podane współrzędne kartezjańskie XYZ punktu początkowego\n zamienione na topocentryczne NEU - northing, easting, up.\n')
-            f.write(' Northing   Easting   Up \n')
+            f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL1992 w postaci X i Y.\n')
+            f.write(' X   Y\n')
             f.write('#---------------------------\n')
             # CONTENT
             for coords in coords_two:
