@@ -1,3 +1,3 @@
 Instrukcja:
 
-python ---> projekt_ver_python.py ---> model_elipsoidy ---> transformacja ---> liczba_wierszy_nagłówka ---> plik_wejsciowy.txt
+python ---> projekt_ver_python.py ---> transformacja ---> model_elipsoidy --->  plik_wejsciowy.txt ---> liczba_wierszy_nagłówka
