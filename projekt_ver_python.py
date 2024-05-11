@@ -255,6 +255,7 @@ if __name__ == "__main__":
             for coords in coords_plh:
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
+            print('Wynik zapisano w pliku result_xyz2blh.txt')
                 
     elif "xyz2neu" in sys.argv[-4]:
         
@@ -284,6 +285,7 @@ if __name__ == "__main__":
             for coords in coords_neu:
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
+            print('Wynik zapisano w pliku result_xyz2neu.txt')
             
     elif "blh2xyz" in sys.argv[-4]:
     # BLH TO XYZ
@@ -308,6 +310,7 @@ if __name__ == "__main__":
             for coords in coords_xyz:
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
+            print('Wynik zapisano w pliku result_blh2xyz.txt')
                 
     elif "bl2two" in sys.argv[-4]:
     # BL TO XY2000
@@ -339,6 +342,7 @@ if __name__ == "__main__":
                 for coords in coords_two:
                     line = ','.join([str(coord) for coord in coords])
                     f.write(line + '\n')
+                print('Wynik zapisano w pliku result_bl2two.txt')
 
     elif "bl2nine" in sys.argv[-4]:
     # BL TO XY1992    
@@ -364,6 +368,7 @@ if __name__ == "__main__":
             for coords in coords_two:
                 line = ','.join([str(coord) for coord in coords])
                 f.write(line + '\n')
+            print('Wynik zapisano w pliku result_bl2nine.txt')
     
     
     else:
