@@ -24,6 +24,9 @@ class Transformacje:
         elif model == "mars":
             self.a = 3396900.0
             self.b = 3376097.80585952
+        elif model == "krass":
+            self.a = 6378245.0
+            self.b = 6356863.0188
         else:
             raise NotImplementedError(f"{model} model not implemented")
         self.flat = (self.a - self.b) / self.a
@@ -222,8 +225,10 @@ if __name__ == "__main__":
         geo = Transformacje(model = "grs80")
     elif 'mars' in sys.argv[-3]:
         geo = Transformacje(model = "mars")
+    elif 'krass' in sys.argv[-3]:
+        geo = Transformacje(model = "krass")
     else:
-        raise 'Podaj model elipsoidy!'
+        raise ValueError('Nieprawidłowy lub nieosługiwany model elipsoidy!\n Podaj jeden z wymienionych: grs80/wgs84/krass/mars')
     imp_file_path = sys.argv[-2]
     header_lines = int(sys.argv[-1])
     
@@ -362,6 +367,6 @@ if __name__ == "__main__":
     
     
     else:
-        raise "Musisz podać rodzaj transformacji współrzędnych!"
+        raise ValueError("Nieprawidłowy lub nieobsługiwany model transformacji!\n Podaj jeden z wymienionych: xyz2plh/plh2xyz/xyz2neu/bl2two/bl2nine.")
             
 print(sys.argv)
