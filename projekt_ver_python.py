@@ -139,17 +139,17 @@ class Transformacje:
     
         Parameters
         ----------
-        f : TYPE
-            DESCRIPTION.
-        l : TYPE
-            DESCRIPTION.
-        lb0 : TYPE
-            DESCRIPTION.
+        f : float
+            Wspolrzedna fi punktu (radiany)
+        l : float
+            Wspolrzedna lambda punktu (radiany)
+        lb0 : float
+            Południk osiowy (radiany)
     
         Returns
         -------
-        x2000, y2000 : TYPE
-            DESCRIPTION.
+        x2000, y2000 : float
+            Współrzędne w układzie PL2000.
     
         '''
         if lb0 == 15:
@@ -186,18 +186,18 @@ class Transformacje:
     
         Parameters
         ----------
-        f : TYPE
-            DESCRIPTION.
-        l : TYPE
-            DESCRIPTION.
-        lb0 : TYPE, optional
-            DESCRIPTION. The default is radians(19).
+        f : float
+            Wspolrzedna fi punktu (radiany)
+        l : float
+            Wspolrzedna lambda punktu (radiany)
+        lb0 : float
+            Południk osiowy 19 stopni (radiany)
     
         Returns
         -------
-        x92, y92 : TYPE
-            DESCRIPTION.
-    
+        x92, y92 : float
+            Współrzędne w układzie PL1992.
+            
         '''
         b2=self.a**2*(1-self.ecc2)
         e_2=(self.a**2-b2)/b2
