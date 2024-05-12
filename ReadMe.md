@@ -63,7 +63,7 @@ Opis programu:
   Dodatkowo dla niektórych funkcji program zażąda podanie dodatkowych danych
  
  - po wywołaniu transformacji 'bl2two' należy podać jeden z południków osiowych: 15/18/21/24
- - po wywołaniu transformacji 'xyz2neu' należy podać współrzędne [CZEGO???] w metrach, w następującej kolejności: X,Y,Z 
+ - po wywołaniu transformacji 'xyz2neu' należy podać współrzędne odbiornika w metrach, w następującej kolejności: X,Y,Z 
   (należy pamiętać aby oddzielić dane przecinkiem!)
   
   
@@ -92,13 +92,13 @@ Przykładowe transformacje:
 
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda, h)
 
-    52.23456 21.37456 140.111
-    52.98765 19.29475 420.090
+    52.097272,21.031533,141.399
+    52.097272,21.031533,141.4
 
   otrzymujemy wyniki (kolejno X[m], Y[m], Z[m])
 
-    12345.789 12345.789 12345.789
-    11111.111 22222.222 33333.333
+    3664940.526,1409153.576,5009571.155
+    3664940.527,1409153.576,5009571.156
 
 
 
@@ -126,8 +126,8 @@ Przykładowe transformacje:
 
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda)
   
-    52.23456 21.23456
-    52.98765 19.29475
+    52.097272,21.031533
+    52.097272,21.031533
 
   otrzymujemy wyniki (kolejno x92[m], y92[m])
 
@@ -143,10 +143,10 @@ Przykładowe transformacje:
     52.097272,21.031533
     52.097272,21.031533
   
-  otrzymujemy wyniki (kolejno x00[m], y00[m])
+  otrzymujemy wyniki (kolejno x2000[m], y2000[m])
 
-    -1513880290269.748,387848366855.741
-    -1513880290269.748,387848366855.741 
+    5773722.697,7502160.76
+    5773722.697,7502160.76 
 
    
    
