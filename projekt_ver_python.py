@@ -372,6 +372,6 @@ if __name__ == "__main__":
     
     
     else:
-        raise ValueError("Nieprawidłowy lub nieobsługiwany model transformacji!\n Podaj jeden z wymienionych: xyz2plh/plh2xyz/xyz2neu/bl2two/bl2nine.")
+        raise ValueError("Nieprawidłowy lub nieobsługiwany model transformacji!\n Podaj jeden z wymienionych: xyz2plh/blh2xyz/xyz2neu/bl2two/bl2nine.")
             
 print(sys.argv)
