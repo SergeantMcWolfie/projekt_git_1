@@ -1,4 +1,4 @@
-[NAZWA NASZEGO PROGRAMU - PLIKU PYTHON]
+Transformacje_wsp_v5
 
 
 Dostępne transformacje:
@@ -15,17 +15,15 @@ Obsługiwane modele elipsoidy:
    GRS80
    WGS84
    Elipsoida Krasowskiego
+   Mars
  
-???????????????????????????????????????????????????
+
 Wymagania:
 
-   system operacyjny Windows 11 lub macOS [JAKA WERSJA??]
-   python 3.12 lub python 3.11
+   system operacyjny Windows 11 
+   python 3.12 
    biblioteka numpy
-   biblioteka argparse
-   biblioteka math
   
-????????????????????????????????????????????????????
 
 
 Opis programu:
@@ -33,24 +31,24 @@ Opis programu:
  Plik przyjmuje argumenty podane za pomocą flag oddzielonych spacją w następującej kolejności:
 
 
-'python' ---> [NAZWA NASZEGO PROGRAMU - PLIKU PYTHON] ---> transformacja ---> model_elipsoidy --->  plik_wejsciowy.txt ---> liczba_wierszy_nagłówka_pliku_wejściowego   
+'python' ---> 'Transformacje_wsp_v5' ---> transformacja ---> model elipsoidy --->  plik_wejsciowy.txt ---> liczba_wierszy_nagłówka_pliku_wejściowego   
 
 
   Wybór transformacji możliwy jest poprzez wpisanie jednej z poniższych nazw:
 
-   'xyz2plh' dla transformacji XYZ_BLH
-   'plh2xyz' dla transformacji BLH_XYZ
+   'xyzblh' dla transformacji XYZ_BLH
+   'blh2xyz' dla transformacji BLH_XYZ
    'xyz2neu' dla transformacji XYZ_NEU
    'bl2two' dla transformacji BL_PL1992
    'bl2nine' dla transformacji BL_PL2000
   
 
-  Wybór elipsoidy możliwy jest poprzez wpisanie jednej z poniższych nazw:
+  Wybór modelu elipsoidy możliwy jest poprzez wpisanie jednej z poniższych nazw:
 
    'wgs84' dla elipsoidy WGS80
    'grs80' dla elipsoidy GRS84
    'krass' dla elipsoidy Krasowskiego
-
+   'mars'  dla Mars
   
   Po wyborze parametrów i załadowaniu pliku z danymi utworzy się plik tekstowy zawierający wyniki wykonanych obliczeń.
 
@@ -67,7 +65,7 @@ Opis programu:
   (należy pamiętać aby oddzielić dane przecinkiem!)
   
   
-Przykładowe transformacje:
+Przykładowe transformacje (dla elipsoidy GRS80):
   
 
  XYZ ---> BLH
@@ -101,10 +99,8 @@ Przykładowe transformacje:
     3664940.527,1409153.576,5009571.156
 
 
-
-?????????????????????????????????????????????????????????????????????????  
  XYZ ---> neu
-  Funkcja przekształca współrzędne orto-karrtezjańskie XYZ punktu początkowego
+  Funkcja przekształca współrzędne orto-kartezjańskie XYZ punktu początkowego
    do współrzędnych topocentrycznych NEU (northing, easting, up).
 
   dla danych z pliku 'wsp_XYZ.txt' (kolejno X[m], Y[m], Z[m])
@@ -117,10 +113,7 @@ Przykładowe transformacje:
     537311.974,613451.991,-881637.196
     537312.049,613451.933,-881637.196
   
-??????????????????????????????????????????????????????????????????????????
-
-
-  
+ 
  BL ---> XY PL1992
   Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL2000.
 
