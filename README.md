@@ -1,61 +1,61 @@
 Transformacje_wsp_v5
 
 
-Dostępne transformacje:
+Dostępne transformacje:<br>
 
-   XYZ ---> BLH
-   BLH ---> XYZ
-   XYZ ---> NEU
-   BL ---> PL1992
-   BL ---> PL2000
+   XYZ ---> BLH<br>
+   BLH ---> XYZ<br>
+   XYZ ---> NEU<br>
+   BL ---> PL1992<br>
+   BL ---> PL2000<br>
 
  
-Obsługiwane modele elipsoidy:
+Obsługiwane modele elipsoidy:<br>
 
-   GRS80
-   WGS84
-   Elipsoida Krasowskiego
-   Mars
+   GRS80<br>
+   WGS84<br>
+   Elipsoida Krasowskiego<br>
+   Mars<br>
  
 
-Wymagania:
+Wymagania:<br>
 
-   system operacyjny Windows 11 
-   python 3.12 
-   biblioteka numpy
+   system operacyjny Windows 11 <br>
+   python 3.12 <br>
+   biblioteka numpy<br>
   
 
 
-Opis programu:
+Opis programu:<br>
  
- Plik przyjmuje argumenty podane za pomocą flag oddzielonych spacją w następującej kolejności:
+ Plik przyjmuje argumenty podane za pomocą flag oddzielonych spacją w następującej kolejności:<br>
 
 
-'python' ---> 'Transformacje_wsp_v5' ---> transformacja ---> model elipsoidy --->  plik_wejsciowy.txt ---> liczba_wierszy_nagłówka_pliku_wejściowego   
+'python' ---> 'Transformacje_wsp_v5' ---> transformacja ---> model elipsoidy --->  plik_wejsciowy.txt ---> liczba_wierszy_nagłówka_pliku_wejściowego   <br>
 
 
-  Wybór transformacji możliwy jest poprzez wpisanie jednej z poniższych nazw:
+  Wybór transformacji możliwy jest poprzez wpisanie jednej z poniższych nazw:<br>
 
-   'xyzblh' dla transformacji XYZ_BLH
-   'blh2xyz' dla transformacji BLH_XYZ
-   'xyz2neu' dla transformacji XYZ_NEU
-   'bl2two' dla transformacji BL_PL1992
-   'bl2nine' dla transformacji BL_PL2000
+   'xyzblh' dla transformacji XYZ_BLH<br>
+   'blh2xyz' dla transformacji BLH_XYZ<br>
+   'xyz2neu' dla transformacji XYZ_NEU<br>
+   'bl2nine' dla transformacji BL_PL1992<br>
+   'bl2two' dla transformacji BL_PL2000<br>
   
 
-  Wybór modelu elipsoidy możliwy jest poprzez wpisanie jednej z poniższych nazw:
+  Wybór modelu elipsoidy możliwy jest poprzez wpisanie jednej z poniższych nazw:<br>
 
-   'wgs84' dla elipsoidy WGS80
-   'grs80' dla elipsoidy GRS84
-   'krass' dla elipsoidy Krasowskiego
-   'mars'  dla Mars
+   'wgs84' dla elipsoidy WGS80<br>
+   'grs80' dla elipsoidy GRS84<br>
+   'krass' dla elipsoidy Krasowskiego<br>
+   'mars'  dla Mars<br>
   
-  Po wyborze parametrów i załadowaniu pliku z danymi utworzy się plik tekstowy zawierający wyniki wykonanych obliczeń.
+  Po wyborze parametrów i załadowaniu pliku z danymi utworzy się plik tekstowy zawierający wyniki wykonanych obliczeń.<br>
 
-  Plik z wynikami zapisuje się pod nazwą:
+  Plik z wynikami zapisuje się pod nazwą:<br>
 
-  "result_{funkcja}.txt"
-  (gdzie {funkcja} oznacza nazwę transformacji, którą chcemy wykonać)
+  "result_{funkcja}.txt"<br>
+  (gdzie {funkcja} oznacza nazwę transformacji, którą chcemy wykonać)<br>
 
 
   Dodatkowo dla niektórych funkcji program zażąda podanie dodatkowych danych
