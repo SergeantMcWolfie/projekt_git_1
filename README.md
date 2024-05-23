@@ -58,17 +58,17 @@ Opis programu:<br>
   (gdzie {funkcja} oznacza nazwę transformacji, którą chcemy wykonać)<br>
 
 
-  Dodatkowo dla niektórych funkcji program zażąda podanie dodatkowych danych
+  Dodatkowo dla niektórych funkcji program zażąda podanie dodatkowych danych<br>
  
- - po wywołaniu transformacji 'bl2two' należy podać jeden z południków osiowych: 15/18/21/24
- - po wywołaniu transformacji 'xyz2neu' należy podać współrzędne odbiornika w metrach, w następującej kolejności: X,Y,Z 
+ - po wywołaniu transformacji 'bl2two' należy podać jeden z południków osiowych: 15/18/21/24<br>
+ - po wywołaniu transformacji 'xyz2neu' należy podać współrzędne odbiornika w metrach, w następującej kolejności: X,Y,Z <br>
   (należy pamiętać aby oddzielić dane przecinkiem!)
   
   
-Przykładowe transformacje (dla elipsoidy GRS80):
+Przykładowe transformacje (dla elipsoidy GRS80):<br>
   
 
- XYZ ---> BLH
+ XYZ ---> BLH<br>
   Algorytm Hirvonena - algorytm transformacji współrzędnych ortokartezjańskich (X[m], Y[m], Z[m])
    na współrzędne geodezyjne długość szerokość i wysokośc elipsoidalna (phi, lam, h). Jest to proces iteracyjny. 
    W wyniku 3-4-krotneej iteracji wyznaczenia wsp. phi można przeliczyć współrzędne z dokładnoscią ok 1 cm. 
@@ -84,7 +84,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):
     52.097272,21.031533,141.4
 
   
- BLH ---> XYZ
+ BLH ---> XYZ<br>
   Algorytm odwrotny do tego zaproponowanego przez Hirvonena - transformuje współrzędne geocentryczne
    do współrzędnych ortokartezjańskich w postaci X, Y, Z.
 
@@ -99,7 +99,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):
     3664940.527,1409153.576,5009571.156
 
 
- XYZ ---> neu
+ XYZ ---> neu<br>
   Funkcja przekształca współrzędne orto-kartezjańskie XYZ punktu początkowego
    do współrzędnych topocentrycznych NEU (northing, easting, up).
 
@@ -114,8 +114,8 @@ Przykładowe transformacje (dla elipsoidy GRS80):
     537312.049,613451.933,-881637.196
   
  
- BL ---> XY PL1992
-  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL2000.
+ BL ---> XY PL1992<br>
+  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL1992.
 
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda)
   
@@ -128,8 +128,8 @@ Przykładowe transformacje (dla elipsoidy GRS80):
     472071.316,639114.469
 
   
- BL ---> XY PL2000
-  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL1992.
+ BL ---> XY PL2000<br>
+  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL2000.
   
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda)
   
