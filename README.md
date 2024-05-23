@@ -45,8 +45,8 @@ Opis programu:<br>
 
   Wybór modelu elipsoidy możliwy jest poprzez wpisanie jednej z poniższych nazw:<br>
 
-   'wgs84' dla elipsoidy WGS80<br>
-   'grs80' dla elipsoidy GRS84<br>
+   'wgs84' dla elipsoidy WGS84<br>
+   'grs80' dla elipsoidy GRS80<br>
    'krass' dla elipsoidy Krasowskiego<br>
    'mars'  dla Mars<br>
   
