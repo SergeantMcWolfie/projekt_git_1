@@ -49,6 +49,10 @@ Opis programu:<br>
    'grs80' dla elipsoidy GRS80<br>
    'krass' dla elipsoidy Krasowskiego<br>
    'mars'  dla Mars<br>
+
+   Przy czym użycie elipsoidy Krasowskiego możliwe jest jedynie dla transformacji: 'xyzblh', 'blh2xyz', 'xyz2neu'<br>
+   (program nie obsługuje w tym wypadku transformacji: 'bl2nine', 'bl2two' - zwróci wtedy błędne wyniki!)<br>
+    
   
   Po wyborze parametrów i załadowaniu pliku z danymi utworzy się plik tekstowy zawierający wyniki wykonanych obliczeń.<br>
 
@@ -62,7 +66,7 @@ Opis programu:<br>
  
  - po wywołaniu transformacji 'bl2two' należy podać jeden z południków osiowych: 15/18/21/24<br>
  - po wywołaniu transformacji 'xyz2neu' należy podać współrzędne odbiornika w metrach, w następującej kolejności: X,Y,Z <br>
-  (należy pamiętać aby oddzielić dane przecinkiem!)
+  (należy pamiętać aby oddzielić dane przecinkiem!)<br>
   
   
 Przykładowe transformacje (dla elipsoidy GRS80):<br>
@@ -71,7 +75,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
  XYZ ---> BLH<br>
   Algorytm Hirvonena - algorytm transformacji współrzędnych ortokartezjańskich (X[m], Y[m], Z[m])
    na współrzędne geodezyjne długość szerokość i wysokośc elipsoidalna (phi, lam, h). Jest to proces iteracyjny. 
-   W wyniku 3-4-krotneej iteracji wyznaczenia wsp. phi można przeliczyć współrzędne z dokładnoscią ok 1 cm. 
+   W wyniku 3-4-krotneej iteracji wyznaczenia wsp. phi można przeliczyć współrzędne z dokładnoscią ok 1 cm. <br>
 
   dla danych z pliku 'wsp_inp_XYZ.txt' (kolejno X[m], Y[m], Z[m])
 
@@ -86,7 +90,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
   
  BLH ---> XYZ<br>
   Algorytm odwrotny do tego zaproponowanego przez Hirvonena - transformuje współrzędne geocentryczne
-   do współrzędnych ortokartezjańskich w postaci X, Y, Z.
+   do współrzędnych ortokartezjańskich w postaci X, Y, Z.<br>
 
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda, h)
 
@@ -101,7 +105,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
 
  XYZ ---> neu<br>
   Funkcja przekształca współrzędne orto-kartezjańskie XYZ punktu początkowego
-   do współrzędnych topocentrycznych NEU (northing, easting, up).
+   do współrzędnych topocentrycznych NEU (northing, easting, up).<br>
 
   dla danych z pliku 'wsp_XYZ.txt' (kolejno X[m], Y[m], Z[m])
 
@@ -115,7 +119,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
   
  
  BL ---> XY PL1992<br>
-  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL1992.
+  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL1992.<br>
 
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda)
   
@@ -129,7 +133,7 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
 
   
  BL ---> XY PL2000<br>
-  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL2000.
+  Funkcja zwraca wartości współrzędnych X, Y  w odwzorowaniu PL2000.<br>
   
   dla danych z pliku 'wsp_inp_BL.txt' (kolejno fi, lambda)
   
