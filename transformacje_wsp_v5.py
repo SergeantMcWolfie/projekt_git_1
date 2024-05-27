@@ -314,7 +314,7 @@ if __name__ == "__main__":
                 
     elif "bl2two" in sys.argv[-4]:
         if sys.argv[-3] == 'krass':
-            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE')
+            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE    ')
             if zapytanie == 'TAK':
                 coords_two = []
                 
@@ -385,7 +385,7 @@ if __name__ == "__main__":
 
     elif "bl2nine" in sys.argv[-4]:
         if sys.argv[-3] == 'krass':
-            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE')
+            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE    ')
             if zapytanie == 'TAK':
     # BL TO XY1992    
         
