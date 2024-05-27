@@ -313,15 +313,111 @@ if __name__ == "__main__":
             print('Wynik zapisano w pliku result_blh2xyz.txt')
                 
     elif "bl2two" in sys.argv[-4]:
+        if sys.argv[-3] == 'krass':
+            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE')
+            if zapytanie == 'TAK':
+                coords_two = []
+                
+                lb0 = int(input('Podaj jeden z południków osiowych 15/18/21/24: '))
+                if lb0 != 15 and lb0 != 18 and lb0 != 21 and lb0 != 24:
+                    raise ValueError('Musisz podać jeden z wymienionych południków!')
+                else:
+                        
+                    with open(imp_file_path) as f:
+                            lines = f.readlines()
+                            lines = lines[header_lines:]
+                            for line in lines:
+                                line = line.strip()
+                                b_str, l_str = line.split(',')
+                                b, l = (float(b_str), float(l_str))
+                                b, l = radians(b), radians(l)
+                                x, y = geo.bl2two(b, l, lb0)
+                                x, y = round(x, 3), round(y, 3)
+                                coords_two.append([x, y])
+                    with open('result_bl2two.txt', 'w') as f:
+                        # HEADER
+                        f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL2000 w postaci X i Y.\n')
+                        f.write(' X   Y\n')
+                        f.write('#---------------------------\n')
+                        # CONTENT
+                        for coords in coords_two:
+                            line = ','.join([str(coord) for coord in coords])
+                            f.write(line + '\n')
+                        print('Wynik zapisano w pliku result_bl2two.txt')
+            elif zapytanie == 'NIE':
+                sys.exit()
+            
+            else:
+                raise ValueError('Musisz wpisać TAK lub NIE')
+                
+        else:
+            
     # BL TO XY2000
         
-        coords_two = []
+            coords_two = []
+            
+            lb0 = int(input('Podaj jeden z południków osiowych 15/18/21/24: '))
+            if lb0 != 15 and lb0 != 18 and lb0 != 21 and lb0 != 24:
+                raise ValueError('Musisz podać jeden z wymienionych południków!')
+            else:
+                    
+                with open(imp_file_path) as f:
+                        lines = f.readlines()
+                        lines = lines[header_lines:]
+                        for line in lines:
+                            line = line.strip()
+                            b_str, l_str = line.split(',')
+                            b, l = (float(b_str), float(l_str))
+                            b, l = radians(b), radians(l)
+                            x, y = geo.bl2two(b, l, lb0)
+                            x, y = round(x, 3), round(y, 3)
+                            coords_two.append([x, y])
+                with open('result_bl2two.txt', 'w') as f:
+                    # HEADER
+                    f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL2000 w postaci X i Y.\n')
+                    f.write(' X   Y\n')
+                    f.write('#---------------------------\n')
+                    # CONTENT
+                    for coords in coords_two:
+                        line = ','.join([str(coord) for coord in coords])
+                        f.write(line + '\n')
+                    print('Wynik zapisano w pliku result_bl2two.txt')
+
+    elif "bl2nine" in sys.argv[-4]:
+        if sys.argv[-3] == 'krass':
+            zapytanie = input('Przeprowadzenie tej transformacji dla wybranego przez Ciebie modelu może dać błędne wyniki. Kontynuować?: TAK/NIE')
+            if zapytanie == 'TAK':
+    # BL TO XY1992    
         
-        lb0 = int(input('Podaj jeden z południków osiowych 15/18/21/24: '))
-        if lb0 != 15 and lb0 != 18 and lb0 != 21 and lb0 != 24:
-            raise ValueError('Musisz podać jeden z wymienionych południków!')
+                coords_two = []
+                with open(imp_file_path) as f:
+                        lines = f.readlines()
+                        lines = lines[header_lines:]
+                        for line in lines:
+                            line = line.strip()
+                            b_str, l_str = line.split(',')
+                            b, l = (float(b_str), float(l_str))
+                            b, l = radians(b), radians(l)
+                            x, y = geo.bl2nine(b, l)
+                            x, y = round(x, 3), round(y, 3)
+                            coords_two.append([x, y])
+                with open('result_bl2nine.txt', 'w') as f:
+                    # HEADER
+                    f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL1992 w postaci X i Y.\n')
+                    f.write(' X   Y\n')
+                    f.write('#---------------------------\n')
+                    # CONTENT
+                    for coords in coords_two:
+                        line = ','.join([str(coord) for coord in coords])
+                        f.write(line + '\n')
+                    print('Wynik zapisano w pliku result_bl2nine.txt')
+            elif zapytanie == 'NIE':
+                sys.exit()
+            
+            else:
+                raise ValueError('Musisz wpisać TAK lub NIE')
         else:
-                
+            coords_two = []
             with open(imp_file_path) as f:
                     lines = f.readlines()
                     lines = lines[header_lines:]
@@ -330,46 +426,20 @@ if __name__ == "__main__":
                         b_str, l_str = line.split(',')
                         b, l = (float(b_str), float(l_str))
                         b, l = radians(b), radians(l)
-                        x, y = geo.bl2two(b, l, lb0)
+                        x, y = geo.bl2nine(b, l)
                         x, y = round(x, 3), round(y, 3)
                         coords_two.append([x, y])
-            with open('result_bl2two.txt', 'w') as f:
+            with open('result_bl2nine.txt', 'w') as f:
                 # HEADER
-                f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL2000 w postaci X i Y.\n')
+                f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL1992 w postaci X i Y.\n')
                 f.write(' X   Y\n')
                 f.write('#---------------------------\n')
                 # CONTENT
                 for coords in coords_two:
                     line = ','.join([str(coord) for coord in coords])
                     f.write(line + '\n')
-                print('Wynik zapisano w pliku result_bl2two.txt')
+                print('Wynik zapisano w pliku result_bl2nine.txt')
 
-    elif "bl2nine" in sys.argv[-4]:
-    # BL TO XY1992    
-        
-        coords_two = []
-        with open(imp_file_path) as f:
-                lines = f.readlines()
-                lines = lines[header_lines:]
-                for line in lines:
-                    line = line.strip()
-                    b_str, l_str = line.split(',')
-                    b, l = (float(b_str), float(l_str))
-                    b, l = radians(b), radians(l)
-                    x, y = geo.bl2nine(b, l)
-                    x, y = round(x, 3), round(y, 3)
-                    coords_two.append([x, y])
-        with open('result_bl2nine.txt', 'w') as f:
-            # HEADER
-            f.write('Współrzędne geocentryczne phi i Lambda zamienione na współrzędne współrzędne w układzie PL1992 w postaci X i Y.\n')
-            f.write(' X   Y\n')
-            f.write('#---------------------------\n')
-            # CONTENT
-            for coords in coords_two:
-                line = ','.join([str(coord) for coord in coords])
-                f.write(line + '\n')
-            print('Wynik zapisano w pliku result_bl2nine.txt')
-    
     
     else:
         raise ValueError("Nieprawidłowy lub nieobsługiwany model transformacji!\n Podaj jeden z wymienionych: xyz2blh/blh2xyz/xyz2neu/bl2two/bl2nine.")
