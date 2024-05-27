@@ -145,7 +145,10 @@ Przykładowe transformacje (dla elipsoidy GRS80):<br>
     5773722.697,7502160.76
     5773722.697,7502160.76 
 
-   
+   Przykładowe wywołanie fuckji z rezultatem pomyślnym:<br>
+   C:\Users\adaml\OneDrive\Dokumenty\Studia_sem4\informatyka_geodezyjna_2\projekt_git_1>python transformacje_wsp_v5.py bl2nine grs80 wsp_inp_BL.txt 3 <br>
+   Wynik zapisano w pliku result_bl2nine.txt <br>
+   ['transformacje_wsp_v5.py', 'bl2nine', 'grs80', 'wsp_inp_BL.txt', '3']
    
 
 
