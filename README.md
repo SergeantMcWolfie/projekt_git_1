@@ -21,7 +21,7 @@ Obsługiwane modele elipsoidy:<br>
 Wymagania:<br>
 
    system operacyjny Windows 11 <br>
-   python 3.12 <br>
+   python 3.12 lub 3.11 <br>
    biblioteka numpy<br>
   
 
